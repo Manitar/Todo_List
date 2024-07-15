@@ -15,7 +15,7 @@ async function findOrCreateTodoList(userId) {
 
 function findTodoById(todoList, todoId) {
   try {
-    const todo = TodoList.find(todo => todo._id.toString() === todoId)
+    const todo = todoList.find(todo => todo.id.toString() === todoId)
     if (!todo) {
       throw new Error(`Todo with todoId ${todoId} not found`);
     }
@@ -47,25 +47,24 @@ const createTodo = async (req, res) => {
     todoList.todos.push(newTodo)
     await todoList.save()
 
-    res.status(201).json(todoList);
+    res.status(201).json(todoList._doc.todos);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
 const completeTodo = async (req, res) => {
-  try {
+  try { 
     const { userId, todoId } = req.params
     const { completed } = req.body
 
-    let todoList = findOrCreateTodoList(userId)
-    let todo = findTodoById(todoList.todos, todoId)
+    let todoList = await findOrCreateTodoList(userId)
+    let todo = findTodoById(todoList._doc.todos, todoId)
 
     todo.completed = completed
-
     await todoList.save()
 
-    res.status(200).json(todoList.todos);
+    res.status(200).json(todoList._doc.todos);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
