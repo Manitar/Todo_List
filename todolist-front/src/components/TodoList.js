@@ -9,7 +9,7 @@ const TodoList = ({ userId }) => {
         if (!userId) return; // Skip fetching if userId is not available
         try{
             const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/todos/${userId}`)
-            console.log(response)
+            console.log(response.data)
             setTodos(response.data)
         } catch (error){
             console.error(error)
