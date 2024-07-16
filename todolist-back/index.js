@@ -20,6 +20,17 @@ mongoose.connect(mongoUri)
 app.use(bodyParser.json());
 app.use(cors());
 
+// Error handling middleware
+// app.use((err, req, res, next) => {
+//   console.error(err.stack); // Log the stack trace for debugging
+
+//   res.status(err.statusCode || 500).json({
+//     error: {
+//       message: err.message || 'Internal Server Error',
+//     },
+//   });
+// });
+
 // Import routes
 const userRoutes = require('./routes/users')
 const todoRoutes = require('./routes/todos');
