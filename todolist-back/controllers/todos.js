@@ -1,35 +1,24 @@
 // controllers/todoListController.js
-const TodoList = require('../models/TodoList');
+const Todo = require('../models/Todo');
 
-async function findOrCreateTodoList(userId) {
-  try {
-    const foundTodoList = await TodoList.findOne({ userId })
-    if (!foundTodoList) {
-      return await TodoList.create({ userId });
-    }
-    return foundTodoList
-  } catch (err) {
-    throw new Error(err)
+async function findTodoById(todoId){
+  try{
+    const foundTodo = Todo.findOne({_id: todoId})
+    return foundTodo
+  } catch (err){
+    throw err
   }
 }
 
-function findTodoById(todoList, todoId) {
-  try {
-    const todo = todoList.find(todo => todo.id.toString() === todoId)
-    if (!todo) {
-      throw new Error(`Todo with todoId ${todoId} not found`);
-    }
-    return todo
-  } catch (err) {
-    throw err;
-  }
+function validateTodoBelongsToUser(userId, todo){
+  return userId === todo.userId
 }
 
-const getTodoListByUserId = async (req, res) => {
+const getAllTodoItemsByUserId = async (req, res) => {
   try {
     const { userId } = req.params
-    const todoLists = await findOrCreateTodoList(userId)
-    res.json(todoLists._doc.todos);
+    const todos = await Todo.find({userId});
+    res.json(todos);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -40,31 +29,33 @@ const createTodo = async (req, res) => {
     const { userId } = req.params
     const { text } = req.body
 
-    const todoList = findOrCreateTodoList(userId)
+    const newTodo = await Todo.create({userId, text}) // Completed is automatically false
 
-    const newTodo = { text }
+    await newTodo.save()
 
-    todoList.todos.push(newTodo)
-    await todoList.save()
-
-    res.status(201).json(todoList._doc.todos);
+    res.status(201).json(newTodo);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-const completeTodo = async (req, res) => {
+const toggleTodoCompletion = async (req, res) => {
   try { 
+
     const { userId, todoId } = req.params
-    const { completed } = req.body
+    let todo = await findTodoById(todoId)
+    if (!todo) {
+      res.status(404).json({ error: `Todo with ID: ${todoId} not found` });
+    }
 
-    let todoList = await findOrCreateTodoList(userId)
-    let todo = findTodoById(todoList._doc.todos, todoId)
+    if (!validateTodoBelongsToUser(userId, todo)) {
+      res.status(403).json({ error: 'Unauthorized: You can only delete your own todos' });
+    }
 
-    todo.completed = completed
-    await todoList.save()
+    todo.completed = !todo.completed
+    await todo.save()
 
-    res.status(200).json(todoList._doc.todos);
+    res.status(200).json(todo);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -72,16 +63,18 @@ const completeTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   try {
-    const { userId, todoListId } = req.params
-    let todoList = findOrCreateTodoList(userId)
+    const { userId, todoId } = req.params
 
-    const todoIndex = todoList.todos.findIndex(todo => todo._id.toString() === todoId);
-    if (todoIndex === -1) {
-      return res.status(404).json({ error: 'Todo not found' });
+    const todo = await findTodoById(todoId)
+    if (!todo) {
+      res.status(404).json({ error: `Todo with ID: ${todoId} not found` });
+    }
+    
+    if (!validateTodoBelongsToUser(userId, todo)) {
+      res.status(403).json({ error: 'Unauthorized: You can only delete your own todos' });
     }
 
-    todoList.todos.splice(todoIndex, 1);
-    await todoList.save();
+    await todo.deleteOne();
 
     res.status(204).json({ message: 'Todo deleted successfully' });
   } catch (err) {
@@ -90,9 +83,9 @@ const deleteTodo = async (req, res) => {
 }
 
 module.exports = {
-  getTodoListByUserId,
+  getAllTodoItemsByUserId,
   createTodo,
-  completeTodo,
+  toggleTodoCompletion,
   deleteTodo
   // ... other controller functions
 };
