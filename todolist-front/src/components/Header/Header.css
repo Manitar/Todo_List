@@ -1,0 +1,12 @@
+.header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); */
+}
+
+.header-text{
+    font-size: 24px;
+    color: #111111;
+}
