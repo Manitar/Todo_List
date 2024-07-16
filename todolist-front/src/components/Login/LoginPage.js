@@ -1,8 +1,8 @@
 import React from 'react';
-import axios from 'axios'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { useAuth } from '../../context/AuthProvider'; // Import useAuth
 import './LoginPage.css';
 
 const LoginSchema = Yup.object().shape({
@@ -11,20 +11,17 @@ const LoginSchema = Yup.object().shape({
 });
 
 function LoginPage() {
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+  const { handleLogin } = useAuth(); // Get handleLogin from context
+
   async function handleSubmit(values, { setSubmitting, setFieldError }) {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, values)
-      console.log('Logging in with:', values);
-      
-      // Save the JWT token to localStorage
-      localStorage.setItem('jwtToken', response.data.token);
-      localStorage.setItem('isLoggedIn', true)
-      
+      console.log('Calling handleLogin with values:', values); // Log the values
+      await handleLogin(values, navigate);
+      console.log('Login completed, navigating to home');
+      navigate('/')
       setSubmitting(false);
-      navigate('/');
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       if (err.response && err.response.data && err.response.data.message) {
         setFieldError('email', err.response.data.message);
@@ -33,8 +30,7 @@ function LoginPage() {
       }
       setSubmitting(false);
     }
-  };
-
+  }
 
   return (
     <Formik
@@ -68,7 +64,7 @@ function LoginPage() {
         </Form>
       )}
     </Formik>
-  );  
+  );
 }
 
 export default LoginPage;

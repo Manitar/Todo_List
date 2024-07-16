@@ -10,6 +10,7 @@ const TodoList = ({ userId }) => {
     const fetchTodos = async () => {
         if (!userId) return; // Skip fetching if userId is not available
         try{
+            console.log(`Token = ${localStorage.getItem('jwtToken')}`)
             const response = await axiosInstance.get(`/todos/${userId}`)
             console.log(response.data)
             setTodos(response.data)

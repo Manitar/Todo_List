@@ -1,10 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header/Header.js';
 import AppRoutes from './Routes';
-import AuthProvider from './context/AuthProvider.js'; // Import AuthProvider
+import { AuthProvider } from './context/AuthProvider.js'; // Ensure correct import
 
 const theme = createTheme({
   // You can customize your theme here

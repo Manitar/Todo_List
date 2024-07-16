@@ -6,6 +6,7 @@ async function findTodoById(todoId){
     const foundTodo = Todo.findOne({_id: todoId})
     return foundTodo
   } catch (err){
+    console.error(err)
     throw err
   }
 }

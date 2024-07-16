@@ -1,5 +1,6 @@
 const User = require('../models/User'); // Assuming User model is in models/User.js
 const bcrypt = require('bcrypt'); // For password hashing
+const generateToken = require('../helpers/jwtHelper'); // Import the token generation function
 
 async function findUserByEmail(email){
     try{
@@ -42,7 +43,8 @@ const loginUser = async(req, res) => {
         if(!isMatch){
             return res.status(401).json({error: `Wrong credentials`})
         }
-        res.status(200).json({userId: user._id.toString()})
+        const token = generateToken(user._id)
+        res.status(200).json({token})
     } catch (err){
         res.status(500).json({error: `Could not login user with email ${req.body.email}`})
     }

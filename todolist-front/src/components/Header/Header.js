@@ -2,7 +2,8 @@ import React from 'react';
 import { AppBar, Toolbar, Typography, Button, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth.js'; // Import the useAuth hook
+import { useAuth } from '../../context/AuthProvider';
+
 
 function Header() {
   const { isAuthenticated, handleLogout } = useAuth();
@@ -11,6 +12,10 @@ function Header() {
   const handleLoginClick = () => {
     navigate('/login'); // Navigate to the login page
   };
+
+  // useEffect(()=>{
+
+  // }, [])
 
   return (
     <AppBar position="static">
