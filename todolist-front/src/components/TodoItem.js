@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios'
+import withAuth from '../services/axiosInterceptor.js'; // Import the interceptor function
+
+const axiosInstance = withAuth(); // Create an intercepted Axios instance
 
 const TodoItem = ({ userId, todo }) => {
     const [localTodo, setLocalTodo] = useState(todo)
@@ -8,7 +10,7 @@ const TodoItem = ({ userId, todo }) => {
         setIsLoading(true);
         setLocalTodo({ ...localTodo, completed: !localTodo.completed });
         try{
-            const response = await axios.patch(`${process.env.REACT_APP_SERVER_URL}/todos/${userId}/${todo._id}/toggle`)
+            const response  = await axiosInstance.patch(`/todos/${userId}/${todo._id}/toggle`)
             console.log(response.data)
             setLocalTodo(response.data)
         } catch (err){

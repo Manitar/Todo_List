@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import Header from '../Header/Header.js'
 import './LoginPage.css';
 
 const LoginSchema = Yup.object().shape({
@@ -21,6 +20,7 @@ function LoginPage() {
       
       // Save the JWT token to localStorage
       localStorage.setItem('jwtToken', response.data.token);
+      localStorage.setItem('isLoggedIn', true)
       
       setSubmitting(false);
       navigate('/');
