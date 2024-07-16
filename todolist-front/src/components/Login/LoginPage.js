@@ -14,16 +14,27 @@ const LoginSchema = Yup.object().shape({
 function LoginPage() {
   const navigate = useNavigate()
   
-  async function handleSubmit(values, { setSubmitting }) {
+  async function handleSubmit(values, { setSubmitting, setFieldError }) {
     try {
-      const loginResponse = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, values)
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, values)
       console.log('Logging in with:', values);
+      
+      // Save the JWT token to localStorage
+      localStorage.setItem('jwtToken', response.data.token);
+      
       setSubmitting(false);
       navigate('/');
     } catch(err) {
-      console.error(err)
+      console.error(err);
+      if (err.response && err.response.data && err.response.data.message) {
+        setFieldError('email', err.response.data.message);
+      } else {
+        setFieldError('email', 'An error occurred during login');
+      }
+      setSubmitting(false);
     }
   };
+
 
   return (
     <Formik
