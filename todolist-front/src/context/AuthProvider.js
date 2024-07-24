@@ -42,7 +42,7 @@ const AuthProvider = ({ children }) => {
 
   const handleLogin = async (values) => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, values);
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, values); 
       console.log('Logging in with:', values);
 
       // Save token and login flag
@@ -68,8 +68,17 @@ const AuthProvider = ({ children }) => {
     navigate('/login')
   };
 
+  const handleRegister = async (values) => {
+    try{
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/users/register`, values)
+      console.log("Registering in with:", values)
+    } catch (err){
+      console.error(err)
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, userId, isLoading, handleLogin, handleLogout }}>
+    <AuthContext.Provider value={{ isAuthenticated, userId, isLoading, handleLogin, handleRegister, handleLogout }}>
       {children}
     </AuthContext.Provider>
   );

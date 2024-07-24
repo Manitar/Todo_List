@@ -1,4 +1,5 @@
 import React from 'react';
+import {useState} from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -12,14 +13,22 @@ const LoginSchema = Yup.object().shape({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { handleLogin } = useAuth(); // Get handleLogin from context
+  const [pageState, setPageState] = useState('login')
+  const { handleLogin, handleRegister } = useAuth(); // Get handleLogin from context
 
-  async function handleSubmit(values, { setSubmitting, setFieldError }) {
+  async function handleSubmit(values, { setSubmitting, setFieldError }){
+    if(pageState === 'login'){
+      await handleSubmitLogin(values, { setSubmitting, setFieldError })
+    } else {
+      await handleSubmitRegister(values, { setSubmitting, setFieldError })
+      setPageState('login')
+    }
+  }
+
+  async function handleSubmitLogin(values, { setSubmitting, setFieldError }) {
     try {
       console.log('Calling handleLogin with values:', values); // Log the values
       await handleLogin(values, navigate);
-      console.log('Login completed, navigating to home');
-      navigate('/')
       setSubmitting(false);
     } catch (err) {
       console.error(err);
@@ -30,6 +39,26 @@ function LoginPage() {
       }
       setSubmitting(false);
     }
+  }
+
+  async function handleSubmitRegister(values, { setSubmitting, setFieldError }){
+    try {
+      console.log('Calling handleRegister with values:', values); // Log the values
+      await handleRegister(values, navigate);
+      setSubmitting(false);
+    } catch (err) {
+      console.error(err);
+      if (err.response && err.response.data && err.response.data.message) {
+        setFieldError('email', err.response.data.message);
+      } else {
+        setFieldError('email', 'An error occurred during register');
+      }
+      setSubmitting(false);
+    }
+  }
+
+  const togglePageState = function(){
+    setPageState(pageState === 'login' ? 'register' : 'login')
   }
 
   return (
@@ -58,8 +87,13 @@ function LoginPage() {
             />
             <ErrorMessage name="password" component="div" className="error" />
           </div>
+          <a
+            onClick={togglePageState}
+            className="toggle-button">
+          {pageState === 'login' ? 'No account? Register here!' : 'Already have an account? Login here!'}
+          </a>
           <button type="submit" disabled={isSubmitting} className="login-button">
-            Login
+            {pageState === 'login' ? 'Login' : 'Register'}
           </button>
         </Form>
       )}

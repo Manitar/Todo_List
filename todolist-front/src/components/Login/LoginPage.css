@@ -39,3 +39,10 @@
     cursor: pointer;
     width: 100%;
   }
+  
+  .toggle-button{
+    text-decoration: underline;
+    font-size: 12px;
+    margin-bottom: 12px;
+    color: #808080;
+  }
