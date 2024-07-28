@@ -1,6 +1,6 @@
 // HomePage.js
 import React from 'react';
-import TodoList from '../TodoList';
+import TodoList from '../TodoList/TodoList';
 import { useAuth } from '../../context/AuthProvider';
 
 function HomePage() {

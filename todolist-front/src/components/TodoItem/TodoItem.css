@@ -1,0 +1,29 @@
+.todo-item{
+    width: 100%;
+    border-radius: 8px;
+    background: rgb(218, 200, 200);
+    padding: 4px;
+    display: flex;
+    justify-content: space-between;
+    margin: 16px 0px;
+}
+
+.todo-item-start{
+    display: flex;
+    
+}
+
+.todo-text{
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-inline-start: 4px;
+    font-size: 14px;
+}
+
+.todo-item-settings-button{
+    display: flex;
+    align-items: center;
+}
