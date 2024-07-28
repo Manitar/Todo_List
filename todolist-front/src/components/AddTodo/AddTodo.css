@@ -1,25 +1,25 @@
-.login-form-title{
-  
+
+.add-todo-button{
+  margin: 0 0 16px 16px;
 }
 
-.login-form {
+.todo-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    margin: 50px auto;
     width: 300px;
+    margin-inline-start: 16px;
   }
   
   .input-group {
     width: 100%;
-    margin-bottom: 15px;
-    height: 60px; /* Fixed height to accommodate input and error message */
+    margin-bottom: 0px;
   }
   
-  .login-input {
+  .text-input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -34,19 +34,11 @@
     line-height: 20px; /* Vertically center the text */
   }
   
-  .login-button {
+  .create-button {
     background-color: #4CAF50;
     color: white;
-    padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     width: 100%;
-  }
-  
-  .toggle-button{
-    text-decoration: underline;
-    font-size: 12px;
-    margin-bottom: 12px;
-    color: #808080;
   }

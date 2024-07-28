@@ -5,6 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Header from './components/Header/Header.js';
 import AppRoutes from './Routes';
 import { AuthProvider } from './context/AuthProvider.js'; // Ensure correct import
+import { TodoProvider } from './context/TodoProvider.js'; // Ensure correct import
 
 const theme = createTheme({
   // You can customize your theme here
@@ -16,10 +17,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AuthProvider>
-          <div className="App">
-            <Header />
-            <AppRoutes />
-          </div>
+          <TodoProvider>
+            <div className="App">
+              <Header />
+              <AppRoutes />
+            </div>
+          </TodoProvider>
         </AuthProvider>
       </ThemeProvider>
     </Router>

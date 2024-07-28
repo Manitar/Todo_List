@@ -1,29 +1,3 @@
 .todo-list{
     padding: 16px;
 }
-
-.add-todo-button {
-    padding: 8px 16px; /* More padding for a better button feel */
-    background: lightblue;
-    border-radius: 8px;
-    border: 1px solid #ccc; /* A lighter border color for better aesthetics */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adding a nice box shadow */
-    color: #333; /* Darker text color for better contrast */
-    font-size: 16px; /* Increase font size for better readability */
-    cursor: pointer; /* Pointer cursor to indicate it's clickable */
-    transition: all 0.3s ease; /* Smooth transition for hover effects */
-    text-align: center; /* Center the text */
-    display: inline-block; /* Inline-block to fit the text content */
-}
-
-.add-todo-button:hover {
-    background: #87ceeb; /* Slightly darker blue for hover effect */
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
-    transform: translateY(-2px); /* Subtle lift effect on hover */
-}
-
-.add-todo-button:active {
-    background: #6ca0dc; /* Even darker blue for active state */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Smaller shadow on active */
-    transform: translateY(0); /* Remove lift effect on active */
-}

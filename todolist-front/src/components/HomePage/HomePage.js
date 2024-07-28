@@ -1,16 +1,17 @@
-// HomePage.js
-import React from 'react';
+import React, { useState } from 'react';
+import { Button } from '@mui/material';
 import TodoList from '../TodoList/TodoList';
+import AddTodo from '../AddTodo/AddTodo';
+import './HomePage.css';
 import { useAuth } from '../../context/AuthProvider';
 
 function HomePage() {
   const { userId } = useAuth();
-  console.log(`Homepage: userId is ${userId}`)
+
   return (
     <div>
-      <div>
-        <TodoList userId={userId} />
-      </div>
+      <TodoList userId={userId} />
+      <AddTodo userId={userId}/>
     </div>
   );
 }
