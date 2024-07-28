@@ -23,3 +23,12 @@ Utilized Lucid for project planning visual project roadmaps.
 * Express
 * React
 * Node.js
+
+**How to run**
+
+Open 2 terminals, one for frontend (client) and one for backend (server).
+
+Server: `npm start`
+Client: `npm start`
+
+The app will open in browser.
