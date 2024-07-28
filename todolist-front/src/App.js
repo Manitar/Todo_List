@@ -6,6 +6,7 @@ import Header from './components/Header/Header.js';
 import AppRoutes from './Routes';
 import { AuthProvider } from './context/AuthProvider.js'; // Ensure correct import
 import { TodoProvider } from './context/TodoProvider.js'; // Ensure correct import
+import './App.css'
 
 const theme = createTheme({
   // You can customize your theme here

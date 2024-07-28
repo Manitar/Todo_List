@@ -52,7 +52,7 @@ const TodoItem = ({ userId, todo , onDelete}) => {
                  changeTodoState(localTodo)
              }} />
                 <div
-                className="todo-text">
+                className="todo-text ellipsis">
                     {localTodo.text}
                 </div>
             </div>

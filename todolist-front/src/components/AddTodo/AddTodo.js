@@ -56,20 +56,22 @@ function AddTodo({userId}) {
          onSubmit={handleSubmit}
          >
          {({ isSubmitting }) => (
-          <Form className="todo-form">
-          <span className="form-title">Add Task</span>
-          <div className="input-group">
-              <Field
-              name="text"
-              type="text"
-              placeholder="Todo Title"
-              className="text-input"
-              />
+          <div className="todo-form-outer">
+            <Form className="todo-form-inner">
+            <span className="form-title">Add Task</span>
+            <div className="input-group">
+                <Field
+                name="text"
+                type="text"
+                placeholder="Todo Title"
+                className="text-input"
+                />
+            </div>
+            <Button variant="contained" color="success" type="submit" disabled={isSubmitting}>
+                Create
+            </Button>
+            </Form>
           </div>
-          <Button variant="contained" color="success" type="submit" disabled={isSubmitting}>
-              Create
-          </Button>
-          </Form>
          )}
          </Formik>
       )}

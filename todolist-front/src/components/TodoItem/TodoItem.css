@@ -1,4 +1,4 @@
-.todo-item{
+.todo-item {
     width: 100%;
     border-radius: 8px;
     background: rgb(218, 200, 200);
@@ -8,22 +8,20 @@
     margin: 16px 0px;
 }
 
-.todo-item-start{
-    display: flex;
-    
-}
-
-.todo-text{
-    overflow: hidden;
-    white-space: nowrap;
+.todo-item-start {
     display: flex;
     align-items: center;
+    width: 100%;
+}
+
+.todo-text {
+    max-width: 250px;   
     text-align: center;
     margin-inline-start: 4px;
     font-size: 14px;
 }
 
-.todo-item-settings-button{
+.todo-item-settings-button {
     display: flex;
     align-items: center;
 }
