@@ -58,7 +58,7 @@ function LoginPage() {
   }
 
   const togglePageState = function(){
-    setPageState(pageState === 'login' ? 'register' : 'login')
+    setPageState((prevState) => (prevState === 'login' ? 'register' : 'login'));
   }
 
   return (
@@ -67,7 +67,7 @@ function LoginPage() {
       validationSchema={LoginSchema}
       onSubmit={handleSubmit}
     >
-      {({ isSubmitting }) => (
+      {({ isSubmitting, resetForm }) => (
         <Form className="login-form">
           <div className="input-group">
             <Field
@@ -88,7 +88,10 @@ function LoginPage() {
             <ErrorMessage name="password" component="div" className="error" />
           </div>
           <a
-            onClick={togglePageState}
+            onClick={()=>{
+              togglePageState()
+              resetForm()
+            }}
             className="toggle-button">
           {pageState === 'login' ? 'No account? Register here!' : 'Already have an account? Login here!'}
           </a>
