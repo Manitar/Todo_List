@@ -42,7 +42,7 @@ const TodoItem = ({ userId, todo , onDelete}) => {
 
     return (
         <div
-        className="todo-item">
+        className={`todo-item ${localTodo.completed ? 'completed' : 'uncompleted'}`}>
             <div
             className="todo-item-start">
             <input type="checkbox" 
@@ -59,7 +59,7 @@ const TodoItem = ({ userId, todo , onDelete}) => {
             <div
             className="todo-item-settings-button"
             onClick={handleDelete}>
-                <img src='/images/red-trash.svg'/>
+                <img src='/images/trash-red.svg'/>
             </div>
         </div>
     )
