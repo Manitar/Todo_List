@@ -6,6 +6,8 @@ import Header from './components/Header/Header.js';
 import AppRoutes from './Routes';
 import { AuthProvider } from './context/AuthProvider.js'; // Ensure correct import
 import { TodoProvider } from './context/TodoProvider.js'; // Ensure correct import
+import { DndProvider } from 'react-dnd';  // Import DndProvider
+import { HTML5Backend } from 'react-dnd-html5-backend'; // Import HTML5 Backend
 import './App.css'
 
 const theme = createTheme({
@@ -19,10 +21,12 @@ function App() {
         <CssBaseline />
         <AuthProvider>
           <TodoProvider>
-            <div className="App">
-              <Header />
-              <AppRoutes />
-            </div>
+            <DndProvider backend={HTML5Backend}>
+              <div className="App">
+                <Header />
+                <AppRoutes />
+              </div>
+            </DndProvider>
           </TodoProvider>
         </AuthProvider>
       </ThemeProvider>

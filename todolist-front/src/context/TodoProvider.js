@@ -33,12 +33,40 @@ const TodoProvider = ({ children }) => {
   };
 
 
-  const deleteTodo = (todoId) => {
-    setTodos(todos.filter(todo => todo._id !== todoId));
-};
+  // const deleteTodo = (todoId) => {
+  //   setTodos(todos.filter(todo => todo._id !== todoId));
+  // };
+
+  const deleteTodo = async function(todoId){
+    try{
+        const response = await axiosInstance.delete(`/todos/${userId}/${todoId}`)
+        console.log(response.data)
+        if(response.status === 204){
+          setTodos(todos.filter(todo => todo._id !== todoId));
+          return response.status
+        } 
+    } catch (err){
+      console.error(err)      
+    }
+}
+
+
+  const updateTodoOrder = (draggedIndex, hoverIndex) => {
+    // Create a copy of the todos array
+    const newTodos = [...todos];
+  
+    // Remove the dragged item from its original position
+    const [removed] = newTodos.splice(draggedIndex, 1);
+  
+    // Insert the removed item at the new position
+    newTodos.splice(hoverIndex, 0, removed);
+  
+    // Update the state with the reordered todos
+    setTodos(newTodos);
+  };
 
   return (
-    <TodoContext.Provider value={{ todos, fetchTodos, addTodo, deleteTodo }}>
+    <TodoContext.Provider value={{ todos, fetchTodos, addTodo, deleteTodo, updateTodoOrder }}>
       {children}
     </TodoContext.Provider>
   );

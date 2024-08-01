@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import withAuth from '../../services/axiosInterceptor.js';
+import { useDrag } from 'react-dnd';
+import { useTodos } from '../../context/TodoProvider.js';
 import './TodoItem.css';
+
 
 const axiosInstance = withAuth();
 
-const TodoItem = ({ userId, todo , onDelete}) => {
+const TodoItem = ({ userId, todo , onDelete, index}) => {
+    const { deleteTodo } = useTodos();
+    const [{ isDragging }, dragRef] = useDrag(() => ({
+        type: 'TODO_ITEM', // Define your drag item type
+        item: { id: todo._id, index }, // Data associated with the dragged item
+        collect: (monitor) => ({
+          isDragging: monitor.isDragging(),
+        }),
+      }));    
+      
     const [localTodo, setLocalTodo] = useState(todo)
     const [isLoading, setIsLoading] = useState(false);
     const changeTodoState = async function(todo){
@@ -22,10 +34,9 @@ const TodoItem = ({ userId, todo , onDelete}) => {
 
     }
 
-    const handleDelete = async function(){
+    const handleDelete = async function(onDelete){
         try{
-            const response = await axiosInstance.delete(`/todos/${userId}/${localTodo._id}`)
-            console.log(response.data)
+            const response = await deleteTodo(localTodo._id)
             if(response.status === 204){
                 onDelete(localTodo._id)
             } 
@@ -42,6 +53,7 @@ const TodoItem = ({ userId, todo , onDelete}) => {
 
     return (
         <div
+        ref={dragRef}
         className={`todo-item ${localTodo.completed ? 'completed' : 'uncompleted'}`}>
             <div
             className="todo-item-start">
