@@ -12,21 +12,6 @@ const TodoList = ({ userId }) => {
     const { todos, fetchTodos, deleteTodo } = useTodos();
 
 
-    // const addMockTodoItem = async function(){
-    //     try{
-    //         const todoToAdd = {
-    //             userId: userId,
-    //             text: "Mock Todo"
-    //         }
-    //         const response = await axiosInstance.post(`/todos/${userId}`, todoToAdd)
-    //         if(response.status === 201){
-    //             setTodos([...todos, todoToAdd]);
-    //         }
-    //     } catch (err){
-    //         console.error(err)
-    //     }
-    // }
-
     useEffect(()=>{
         fetchTodos()
     }, [userId])
